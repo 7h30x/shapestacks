@@ -15,3 +15,5 @@ data/
 
 # Models
 models/
+
+env_vars.sh
