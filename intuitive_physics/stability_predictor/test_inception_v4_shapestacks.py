@@ -17,7 +17,7 @@ import tensorflow as tf
 sys.path.insert(0, os.environ['SHAPESTACKS_CODE_HOME'])
 from tf_models.inception.inception_model import inception_v4_logregr_model_fn
 from data_provider.shapestacks_provider import shapestacks_input_fn
-from data_provider.fairblocks_provider import fairblocks_real_input_fn
+# from data_provider.fairblocks_provider import fairblocks_real_input_fn
 
 
 # command line argument parser
@@ -109,24 +109,24 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
       name='test')
   print(test_results['accuracy'])
 
-  # evaluate the model on real data
-  if FLAGS.real_data_dir != '':
-    real_results = classifier.evaluate(
-        input_fn=lambda: fairblocks_real_input_fn(
-            'test',
-            FLAGS.real_data_dir,
-            'default',
-            FLAGS.batch_size, FLAGS.epochs_per_eval,
-            FLAGS.n_prefetch, FLAGS.augment),
-        name='real')
-    print(real_results['accuracy'])
+#   # evaluate the model on real data
+#   if FLAGS.real_data_dir != '':
+#     real_results = classifier.evaluate(
+#         input_fn=lambda: fairblocks_real_input_fn(
+#             'test',
+#             FLAGS.real_data_dir,
+#             'default',
+#             FLAGS.batch_size, FLAGS.epochs_per_eval,
+#             FLAGS.n_prefetch, FLAGS.augment),
+#         name='real')
+#     print(real_results['accuracy'])
 
   # writing accuracies and flags to file
   filename = "info_" + time.strftime("%m%d_%H%M%S") + ".txt"
   filename = os.path.join(target_dir, filename)
   with open(filename, "w") as f:
     f.write('Test Accuracy %.3f: \n' %(test_results['accuracy']))
-    f.write('\nAccuracy Real Data %.3f: \n' %(real_results['accuracy']))
+    # f.write('\nAccuracy Real Data %.3f: \n' %(real_results['accuracy']))
     f.write('\nFLAGS: \n')
     for key in vars(FLAGS):
       f.write(key + ': ' + str(vars(FLAGS)[key]) + '\n')
