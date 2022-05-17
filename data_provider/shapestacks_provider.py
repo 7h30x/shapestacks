@@ -53,6 +53,7 @@ def _get_filenames_with_labels(mode, data_dir, split_dir):
     if (i+1) % 100 == 0:
       print("%s / %s : %s" % (i+1, len(scenario_list), scenario))
     scenario_dir = os.path.join(data_dir, 'recordings', scenario)
+    print("hello")
     print(scenario_dir)
     if "vcom=0" in scenario and "vpsf=0" in scenario: # stable scenario
       label = 0.0
