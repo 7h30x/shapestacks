@@ -44,18 +44,14 @@ def _get_filenames_with_labels(mode, data_dir, split_dir):
     raise ValueError("Mode %s is not supported!" % mode)
   with open(scenario_list_file) as f:
     scenario_list = f.read().split('\n')
-    print(scenario_list)
     scenario_list.pop()
 
   filenames = []
   labels = []
-  print(enumerate(scenario_list))
   for i, scenario in enumerate(scenario_list):
     if (i+1) % 100 == 0:
       print("%s / %s : %s" % (i+1, len(scenario_list), scenario))
     scenario_dir = os.path.join(data_dir, 'recordings', scenario)
-    print("hello")
-    print(scenario_dir)
     if "vcom=0" in scenario and "vpsf=0" in scenario: # stable scenario
       label = 0.0
     else: # unstable scenario
@@ -63,7 +59,6 @@ def _get_filenames_with_labels(mode, data_dir, split_dir):
     for img_file in filter(
         lambda f: f.startswith('rgb-') and f.endswith('-mono-0.png'),
         os.listdir(scenario_dir)):
-      print("hello")
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
   print(filenames)
