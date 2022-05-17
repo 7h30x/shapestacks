@@ -57,9 +57,9 @@ def _get_filenames_with_labels(mode, data_dir, split_dir):
     else: # unstable scenario
       label = 1.0
     for img_file in filter(
-        print("hello")
         lambda f: f.startswith('rgb-') and f.endswith('-mono-0.png'),
         os.listdir(scenario_dir)):
+      print("hello")
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
   print(filenames)
