@@ -48,6 +48,7 @@ def _get_filenames_with_labels(mode, data_dir, split_dir):
 
   filenames = []
   labels = []
+  print(scenario_list)
   for i, scenario in enumerate(scenario_list):
     if (i+1) % 100 == 0:
       print("%s / %s : %s" % (i+1, len(scenario_list), scenario))
