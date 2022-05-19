@@ -44,12 +44,10 @@ def _get_filenames_with_labels(mode, data_dir, split_dir):
     raise ValueError("Mode %s is not supported!" % mode)
   with open(scenario_list_file) as f:
     scenario_list = f.read().split('\n')
-    print(scenario_list)
     scenario_list.pop()
 
   filenames = []
   labels = []
-  print(scenario_list)
   for i, scenario in enumerate(scenario_list):
     if (i+1) % 100 == 0:
       print("%s / %s : %s" % (i+1, len(scenario_list), scenario))
