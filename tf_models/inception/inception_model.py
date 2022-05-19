@@ -345,7 +345,6 @@ def inception_v4_logregr_model_fn(features, labels, mode, params):
     return tf.estimator.EstimatorSpec(
         mode=mode,
         loss=loss,
-        predictions=endpoints['PreLogitsFlatten'],
         eval_metric_ops=eval_metric_ops)
   if mode == tf.estimator.ModeKeys.PREDICT:
     return tf.estimator.EstimatorSpec(

@@ -36,6 +36,9 @@ ARGPARSER.add_argument(
 ARGPARSER.add_argument(
     '--real_data_dir', type=str, default='',
     help='The path to the real FAIR block tower test set.')
+ARGPARSER.add_argument(
+    '--angle_nums', type=int, default=1,
+    help='Number of angles to view the tower from.')
 # model parameters
 ARGPARSER.add_argument(
     '--display_inputs', type=int, default=0,
@@ -105,9 +108,8 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
       input_fn=lambda: shapestacks_input_fn(
           'eval', FLAGS.data_dir, FLAGS.split_name,
           FLAGS.batch_size, FLAGS.epochs_per_eval,
-          FLAGS.n_prefetch, FLAGS.augment),
+          FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums),
       name='test')
-  print(test_results.predictions['PreLogitsFlatten'])
   print(test_results['accuracy'])
 
 #   # evaluate the model on real data

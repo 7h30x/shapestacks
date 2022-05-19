@@ -29,7 +29,7 @@ _CROP_WIDTH = 196
 
 # ---------- file-parsing, pre-processing and augmentation ----------
 
-def _get_filenames_with_labels(mode, data_dir, split_dir):
+def _get_filenames_with_labels(mode, data_dir, split_dir, angle_nums):
   """
   Returns all training or test files in the data directory with their
   respective labels.
@@ -59,9 +59,54 @@ def _get_filenames_with_labels(mode, data_dir, split_dir):
     for img_file in filter(
         lambda f: f.startswith('rgb-') and f.endswith('-mono-0.png'),
         os.listdir(scenario_dir)):
-      filenames.append(os.path.join(scenario_dir, img_file))
-      labels.append(label)
-
+      if img_file.contains('cam_1-'):
+        filenames.append(os.path.join(scenario_dir, img_file))
+        labels.append(label)
+      if img_file.contains('cam_2-') and num_angles > 1:
+        filenames.append(os.path.join(scenario_dir, img_file))
+        labels.append(label)
+      if img_file.contains('cam_3-') and num_angles > 2:
+        filenames.append(os.path.join(scenario_dir, img_file))
+        labels.append(label)
+      if img_file.contains('cam_4-') and num_angles > 3:
+        filenames.append(os.path.join(scenario_dir, img_file))
+        labels.append(label)
+      if img_file.contains('cam_5-') and num_angles > 4:
+        filenames.append(os.path.join(scenario_dir, img_file))
+        labels.append(label)
+      if img_file.contains('cam_6-') and num_angles > 5:
+        filenames.append(os.path.join(scenario_dir, img_file))
+        labels.append(label)
+      if img_file.contains('cam_7-') and num_angles > 6:
+        filenames.append(os.path.join(scenario_dir, img_file))
+        labels.append(label)
+      if img_file.contains('cam_8-') and num_angles > 7:
+        filenames.append(os.path.join(scenario_dir, img_file))
+        labels.append(label)
+      if img_file.contains('cam_9-') and num_angles > 8:
+        filenames.append(os.path.join(scenario_dir, img_file))
+        labels.append(label)
+      if img_file.contains('cam_10-') and num_angles > 9:
+        filenames.append(os.path.join(scenario_dir, img_file))
+        labels.append(label)
+      if img_file.contains('cam_11-') and num_angles > 10:
+        filenames.append(os.path.join(scenario_dir, img_file))
+        labels.append(label)
+      if img_file.contains('cam_12-') and num_angles > 11:
+        filenames.append(os.path.join(scenario_dir, img_file))
+        labels.append(label)
+      if img_file.contains('cam_13-') and num_angles > 12:
+        filenames.append(os.path.join(scenario_dir, img_file))
+        labels.append(label)
+      if img_file.contains('cam_14-') and num_angles > 13:
+        filenames.append(os.path.join(scenario_dir, img_file))
+        labels.append(label)
+      if img_file.contains('cam_15-') and num_angles > 14:
+        filenames.append(os.path.join(scenario_dir, img_file))
+        labels.append(label)
+      if img_file.contains('cam_16-') and num_angles > 15:
+        filenames.append(os.path.join(scenario_dir, img_file))
+        labels.append(label)
   return filenames, labels
 
 def _create_dataset(filenames, labels):
@@ -176,7 +221,7 @@ def _center_data(feature, label, rgb_mean):
 def shapestacks_input_fn(
     mode, data_dir, split_name,
     batch_size, num_epochs=1,
-    n_prefetch=2, augment=[]):
+    n_prefetch=2, augment=[], angle_nums):
   """
   Input_fn to feed a tf.estimator.Estimator with ShapeStacks images.
 
@@ -201,7 +246,7 @@ def shapestacks_input_fn(
       'subtract_mean': subtracts the RGB mean of the data chunk loaded
   """
   split_dir = os.path.join(data_dir, 'splits', split_name)
-  filenames, labels = _get_filenames_with_labels(mode, data_dir, split_dir)
+  filenames, labels = _get_filenames_with_labels(mode, data_dir, split_dir, angle_nums)
   rgb_mean_npy = np.load(os.path.join(split_dir, mode + '_bgr_mean.npy'))[[2, 1, 0]]
   dataset = _create_dataset(filenames, labels)
 
