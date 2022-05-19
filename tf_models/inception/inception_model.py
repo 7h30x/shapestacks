@@ -314,9 +314,10 @@ def inception_v4_logregr_model_fn(features, labels, mode, params):
       'probabilities' : log_regr,
       'logits' : tf.identity(logits, name='logits')
   }
-  print("Hello")
-  log_regr = tf.Print(log_regr, [log_regr], message="This is a: ")
-  predictions['classes'] = tf.Print(predictions['classes'], [predictions['classes']], message="This is a: ")
+  a = tf.size(log_regr)
+  a = tf.Print(a, [a], message="This is a: ")
+  a = tf.size(predictions['classes'])
+  a = tf.Print(a, [a], message="This is a: ")
 
   # loss function to optimize
   if mode != tf.estimator.ModeKeys.PREDICT:
