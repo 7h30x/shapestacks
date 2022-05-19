@@ -140,7 +140,7 @@ def main(unparsed_argv):
   # using the Winograd non-fused algorithms provides a small performance boost
   os.environ['TF_ENABLE_WINOGRAD_NONFUSED'] = '1'
 
-  snapshot_types = ['real', 'eval']
+  snapshot_types = ['real']
   for snapshot_type in snapshot_types:
     search_dir = os.path.join(FLAGS.model_dir, 'snapshots')
     list_subdir = [name for name in os.listdir(search_dir) \
