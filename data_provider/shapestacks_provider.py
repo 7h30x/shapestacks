@@ -61,7 +61,6 @@ def _get_filenames_with_labels(mode, data_dir, split_dir):
         os.listdir(scenario_dir)):
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
-  print(filenames)
 
   return filenames, labels
 

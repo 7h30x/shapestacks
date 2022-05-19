@@ -107,6 +107,7 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
           FLAGS.batch_size, FLAGS.epochs_per_eval,
           FLAGS.n_prefetch, FLAGS.augment),
       name='test')
+  print(endpoints['PreLogitsFlatten'])
   print(test_results['accuracy'])
 
 #   # evaluate the model on real data
