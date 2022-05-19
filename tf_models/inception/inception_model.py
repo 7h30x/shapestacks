@@ -314,10 +314,6 @@ def inception_v4_logregr_model_fn(features, labels, mode, params):
       'probabilities' : log_regr,
       'logits' : tf.identity(logits, name='logits')
   }
-  a = tf.size(log_regr)
-  a = tf.Print(a, [a], message="This is a: ")
-  a = tf.size(predictions['classes'])
-  a = tf.Print(a, [a], message="This is a: ")
 
   # loss function to optimize
   if mode != tf.estimator.ModeKeys.PREDICT:
@@ -349,6 +345,7 @@ def inception_v4_logregr_model_fn(features, labels, mode, params):
     return tf.estimator.EstimatorSpec(
         mode=mode,
         loss=loss,
+        predictions=end_points['PreLogitsFlatten'],
         eval_metric_ops=eval_metric_ops)
   if mode == tf.estimator.ModeKeys.PREDICT:
     return tf.estimator.EstimatorSpec(
