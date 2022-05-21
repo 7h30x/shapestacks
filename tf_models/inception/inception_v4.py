@@ -324,7 +324,6 @@ def inception_v4(inputs, num_classes=1001, is_training=True,
           # 1 x 1 x 1536
           net = slim.dropout(net, dropout_keep_prob, scope='Dropout_1b')
           net = slim.flatten(net, scope='PreLogitsFlatten')
-          print(net)
           end_points['PreLogitsFlatten'] = net
           # 1536
           logits = slim.fully_connected(net, num_classes, activation_fn=None,
