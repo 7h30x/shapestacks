@@ -255,11 +255,16 @@ def shapestacks_input_fn(
     dataset = dataset.shuffle(buffer_size=len(filenames))
 
   # parse data from files and apply pre-processing
-  templist = []
+  tempfiles = []
+  templabels = []
   tempsize = int(len(filenames) / angle_nums)
   for i in range(tempsize):
-    templist.append(_parse_record(filenames[i * angle_nums], labels[i * angle_nums]))
-  tempset = tf.constant(templist)
+    tempfile, templabel = _parse_record(filenames[i * angle_nums], labels[i * angle_nums])
+    tempfiles.append(tempfile)
+    templabels.append(templabel)
+  setfiles = tf.constant(tempfiles)
+  setlabels = tf.constant(templabels)
+  tempset = tf.data.Dataset.from_tensor_slices((setfiles, setlabels))
   if augment != [] and mode == 'train':
     dataset = dataset.map(lambda feature, label: _augment(feature, label, augment))
   if 'subtract_mean' in augment:
