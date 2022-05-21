@@ -114,7 +114,7 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   for i in names:
     var = classifier.get_variable_value(i)
     print(i)
-    print(var)
+    #print(var)
   print(test_results['accuracy'])
 
 #   # evaluate the model on real data
