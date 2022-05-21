@@ -262,7 +262,7 @@ def shapestacks_input_fn(
     dataset = dataset.map(lambda feature, label: _center_data(feature, label, rgb_mean_npy))
 
   # prepare batch and epoch cycle
-  dataset = dataset.prefetch((int) n_prefetch * batch_size)
+  dataset = dataset.prefetch(int(n_prefetch) * int(batch_size))
   dataset = dataset.repeat(num_epochs)
   dataset = dataset.batch(batch_size)
 
