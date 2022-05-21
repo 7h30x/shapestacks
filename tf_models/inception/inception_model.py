@@ -309,9 +309,11 @@ def inception_v4_logregr_model_fn(features, labels, mode, params):
     tf.add_to_collection('inception_v4_endpoints', endpoint)
 
   # predictions to make
-  print(np.array(logits))
   
   log_regr = tf.nn.sigmoid(logits, name='sigmoid')
+
+  print(log_regr)
+
   predictions = {
       'classes' : tf.round(log_regr, name='classes'),
       'probabilities' : log_regr,
