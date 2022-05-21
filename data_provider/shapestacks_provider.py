@@ -258,7 +258,7 @@ def shapestacks_input_fn(
   templist = []
   tempsize = int(len(filenames) / angle_nums)
   for i in range(tempsize):
-    templist.add(_parse_record(dataset[i * angle_nums], dataset[i * angle_nums]))
+    templist.append(_parse_record(dataset[i * angle_nums], dataset[i * angle_nums]))
   tempset = tf.constant(templist)
   if augment != [] and mode == 'train':
     dataset = dataset.map(lambda feature, label: _augment(feature, label, augment))
