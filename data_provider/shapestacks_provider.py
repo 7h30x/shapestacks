@@ -259,7 +259,8 @@ def shapestacks_input_fn(
   templabels = []
   tempsize = int(len(filenames) / angle_nums)
   for i in range(tempsize):
-    tempfile, templabel = _parse_record(filenames[i * angle_nums], labels[i * angle_nums])
+    tffile = tf.constant(filenames[i * angle_nums])
+    tempfile, templabel = _parse_record(tffile, labels[i * angle_nums])
     tempfiles.append(tempfile)
     templabels.append(templabel)
   setfiles = tf.concat(tempfiles, 0)
