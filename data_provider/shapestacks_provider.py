@@ -221,7 +221,7 @@ def _center_data(feature, label, rgb_mean):
 def shapestacks_input_fn(
     mode, data_dir, split_name,
     batch_size, num_epochs=1,
-    n_prefetch=2, augment=[], angle_nums):
+    n_prefetch=2, augment=[], angle_nums=1):
   """
   Input_fn to feed a tf.estimator.Estimator with ShapeStacks images.
 
