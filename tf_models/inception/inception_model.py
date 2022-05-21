@@ -312,8 +312,6 @@ def inception_v4_logregr_model_fn(features, labels, mode, params):
   
   log_regr = tf.nn.sigmoid(logits, name='sigmoid')
 
-  print(np.array(log_regr))
-
   predictions = {
       'classes' : tf.round(log_regr, name='classes'),
       'probabilities' : log_regr,
