@@ -255,18 +255,21 @@ def shapestacks_input_fn(
     dataset = dataset.shuffle(buffer_size=len(filenames))
 
   # parse data from files and apply pre-processing
-  dataset = dataset.map(_parse_record)
+  tempsize = len(filenames) / angle_nums
+  tempset = tf.constant()
+  for i in range(tempsize):
+    tempset[i] = _parse_record(dataset[i * angle_nums], dataset[i * angle_nums])
   if augment != [] and mode == 'train':
     dataset = dataset.map(lambda feature, label: _augment(feature, label, augment))
   if 'subtract_mean' in augment:
     dataset = dataset.map(lambda feature, label: _center_data(feature, label, rgb_mean_npy))
 
   # prepare batch and epoch cycle
-  dataset = dataset.prefetch(int(n_prefetch) * int(batch_size))
-  dataset = dataset.repeat(num_epochs)
-  dataset = dataset.batch(batch_size)
+  tempset = tempset.prefetch(int(n_prefetch) * int(batch_size))
+  tempset = tempset.repeat(num_epochs)
+  tempset = tempset.batch(batch_size)
 
   # set up iterator
-  iterator = dataset.make_one_shot_iterator()
+  iterator = tempset.make_one_shot_iterator()
   images, labels = iterator.get_next()
   return images, labels
