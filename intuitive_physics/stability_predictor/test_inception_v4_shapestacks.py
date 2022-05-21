@@ -113,6 +113,7 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   names = classifier.get_variable_names()
   for i in names:
     var = classifier.get_variable_value(i)
+    print(i)
     print(var)
   print(test_results['accuracy'])
 
