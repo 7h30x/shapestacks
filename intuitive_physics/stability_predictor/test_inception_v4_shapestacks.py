@@ -110,12 +110,6 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
           FLAGS.batch_size, FLAGS.epochs_per_eval,
           FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums),
       name='test')
-  names = classifier.get_variable_names()
-  for i in names:
-    var = classifier.get_variable_value(i)
-    print(i)
-    if i.startswith('InceptionV4/Logits'):
-      print(var)
   print(test_results['accuracy'])
 
 #   # evaluate the model on real data
