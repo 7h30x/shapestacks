@@ -263,7 +263,7 @@ def shapestacks_input_fn(
     tempfile, templabel = _parse_record(tffile, labels[i * angle_nums])
     tempfiles.append(tempfile)
     templabels.append(templabel)
-  setfiles = tf.concat(tempfiles, 0)
+  setfiles = tf.concat(tempfiles, 1)
   setlabels = tf.constant(templabels)
   tempset = tf.data.Dataset.from_tensor_slices((setfiles, setlabels))
   if augment != [] and mode == 'train':
