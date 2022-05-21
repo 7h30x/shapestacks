@@ -269,6 +269,4 @@ def shapestacks_input_fn(
   # set up iterator
   iterator = dataset.make_one_shot_iterator()
   images, labels = iterator.get_next()
-  print(images)
-  print(labels)
   return images, labels
