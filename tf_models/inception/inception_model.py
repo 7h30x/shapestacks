@@ -10,6 +10,7 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+import numpy as np
 import tensorflow as tf
 from .inception_v3 import inception_v3
 from .inception_v4 import inception_v4
@@ -308,7 +309,7 @@ def inception_v4_logregr_model_fn(features, labels, mode, params):
     tf.add_to_collection('inception_v4_endpoints', endpoint)
 
   # predictions to make
-  print(logits)
+  print(np.array(logits))
   
   log_regr = tf.nn.sigmoid(logits, name='sigmoid')
   predictions = {
