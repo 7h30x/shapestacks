@@ -332,7 +332,10 @@ def inception_v4_logregr_model_fn(features, labels, mode, params):
             labels=tf.reshape(tf.cast(labels, tf.int32), [-1, 1]),
             predictions=predictions['classes'])
     }
-    tf.print(eval_metric_ops, output_stream=sys.stdout)
+    sess = tf.compat.v1.Session()
+    with sess.as_default():
+      p_value = tf.print(eval_metric_ops)
+      sess.run(p_value)
 
   # return EstimatorSpec depending on mode
   if mode == tf.estimator.ModeKeys.TRAIN:
