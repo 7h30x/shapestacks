@@ -256,7 +256,7 @@ def shapestacks_input_fn(
 
   # parse data from files and apply pre-processing
   templist = []
-  tempsize = len(filenames) / angle_nums
+  tempsize = int(len(filenames) / angle_nums)
   for i in range(tempsize):
     templist.add(_parse_record(dataset[i * angle_nums], dataset[i * angle_nums]))
   tempset = tf.constant(templist)
