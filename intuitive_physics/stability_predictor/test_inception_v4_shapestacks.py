@@ -111,7 +111,6 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
           FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums),
       name='test')
   print(test_results['accuracy'])
-  print(test_results['logits'])
 
 #   # evaluate the model on real data
 #   if FLAGS.real_data_dir != '':
