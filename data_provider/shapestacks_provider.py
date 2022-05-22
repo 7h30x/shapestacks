@@ -49,8 +49,8 @@ def _get_filenames_with_labels(mode, data_dir, scenario, num_angles):
   #filenames = []
   #labels = []
   #for i, scenario in enumerate(scenario_list):
-  if (i+1) % 100 == 0:
-    print("%s / %s : %s" % (i+1, len(scenario_list), scenario))
+  #if (i+1) % 100 == 0:
+  #  print("%s / %s : %s" % (i+1, len(scenario_list), scenario))
   scenario_dir = os.path.join(data_dir, 'recordings', scenario)
   if "vcom=0" in scenario and "vpsf=0" in scenario: # stable scenario
     label = 0.0
