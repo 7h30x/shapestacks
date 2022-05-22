@@ -255,28 +255,18 @@ def shapestacks_input_fn(
     dataset = dataset.shuffle(buffer_size=len(filenames))
 
   # parse data from files and apply pre-processing
-  tempfiles = []
-  templabels = []
-  tempsize = int(len(filenames) / angle_nums)
-  for i in range(tempsize):
-    tffile = tf.constant(filenames[i * angle_nums])
-    tempfile, templabel = _parse_record(tffile, labels[i * angle_nums])
-    tempfiles.append(tempfile)
-    templabels.append(templabel)
-  setfiles = tf.concat(tempfiles, 3)
-  setlabels = tf.constant(templabels)
-  tempset = tf.data.Dataset.from_tensor_slices((setfiles, setlabels))
+  dataset = dataset.map(_parse_record)
   if augment != [] and mode == 'train':
     dataset = dataset.map(lambda feature, label: _augment(feature, label, augment))
   if 'subtract_mean' in augment:
     dataset = dataset.map(lambda feature, label: _center_data(feature, label, rgb_mean_npy))
 
   # prepare batch and epoch cycle
-  tempset = tempset.prefetch(int(n_prefetch) * int(batch_size))
-  tempset = tempset.repeat(num_epochs)
-  tempset = tempset.batch(batch_size)
+  dataset = dataset.prefetch(int(n_prefetch) * int(batch_size))
+  dataset = dataset.repeat(num_epochs)
+  dataset = dataset.batch(batch_size)
 
   # set up iterator
-  iterator = tempset.make_one_shot_iterator()
+  iterator = dataset.make_one_shot_iterator()
   images, labels = iterator.get_next()
   return images, labels
