@@ -126,11 +126,12 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
     prediction_mean.append(test_results['pred_mean'])
     print(test_results['label'])
     labels.append(test_results['label'])
-  sess = tf.compat.v1.Session()
-  with sess.as_default():
-    accuracy = tf.metrics.accuracy(labels=labels, predictions=prediction_mean)
-    print_op = tf.print(accuracy)
-    sess.run(accuracy)
+  total = 0.0
+  for i, pred in enumerate(prediction_mean):
+    if pred == labels[i]:
+      total += 1.0
+  total = total / len(prediction_mean)
+  print(total)
 
 #   # evaluate the model on real data
 #   if FLAGS.real_data_dir != '':
