@@ -316,6 +316,13 @@ def inception_v4_logregr_model_fn(features, labels, mode, params):
       'probabilities' : log_regr,
       'logits' : tf.identity(logits, name='logits')
   }
+  
+  filename = "/content/drive/MyDrive/COMP2550/models/shapestacks-cubes/snapshots/real=0.746450/model-outputs.txt"
+  with open(filename, "a") as f:
+    for prob in predictions['probabilities']:
+      f.write('Probabilities %.3f: \n' %(prob))
+    # f.write('\nAccuracy Real Data %.3f: \n' %(real_results['accuracy']))
+    f.close()
 
   # loss function to optimize
   if mode != tf.estimator.ModeKeys.PREDICT:
