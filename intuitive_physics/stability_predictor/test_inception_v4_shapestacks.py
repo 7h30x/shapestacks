@@ -126,9 +126,10 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
     prediction_mean.append(test_results['pred_mean'])
     print(test_results['label'])
     labels.append(test_results['label'])
+  
   total = 0.0
   for i, pred in enumerate(prediction_mean):
-    if pred == labels[i]:
+    if pred.round() == labels[i]:
       total += 1.0
   total = total / len(prediction_mean)
   print(total)
