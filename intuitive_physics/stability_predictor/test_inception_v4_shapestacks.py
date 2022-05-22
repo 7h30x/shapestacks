@@ -103,14 +103,27 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
       params={'num_display_images' : FLAGS.display_inputs}
       )
 
+  split_dir = os.path.join(FLAGS.data_dir, 'splits', FLAGS.split_name)
+  scenario_list_file = os.path.join(split_dir, 'eval.txt')
+
+  with open(scenario_list_file) as f:
+    scenario_list = f.read().split('\n')
+    scenario_list.pop()
+
+  filenames = []
+  labels = []
+  for i in scenario_list:
+    
+
   # evaluate the model on the corresponding test set
-  test_results = classifier.evaluate(
-      input_fn=lambda: shapestacks_input_fn(
-          'eval', FLAGS.data_dir, FLAGS.split_name,
-          FLAGS.batch_size, FLAGS.epochs_per_eval,
-          FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums),
-      name='test')
-  print(test_results['accuracy'])
+    test_results = classifier.evaluate(
+        input_fn=lambda: shapestacks_input_fn(
+            'eval', FLAGS.data_dir, FLAGS.split_name,
+            FLAGS.batch_size, i, FLAGS.epochs_per_eval,
+            FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums),
+        name='test')
+    print(test_results['pred_mean'])
+    print(test_results['label'])
 
 #   # evaluate the model on real data
 #   if FLAGS.real_data_dir != '':

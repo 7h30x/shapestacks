@@ -29,84 +29,84 @@ _CROP_WIDTH = 196
 
 # ---------- file-parsing, pre-processing and augmentation ----------
 
-def _get_filenames_with_labels(mode, data_dir, split_dir, num_angles):
+def _get_filenames_with_labels(mode, data_dir, scenario, num_angles):
   """
   Returns all training or test files in the data directory with their
   respective labels.
   """
-  if mode == 'train':
-    scenario_list_file = os.path.join(split_dir, 'train.txt')
-  elif mode == 'eval':
-    scenario_list_file = os.path.join(split_dir, 'eval.txt')
-  elif mode == 'test':
-    scenario_list_file = os.path.join(split_dir, 'test.txt')
-  else:
-    raise ValueError("Mode %s is not supported!" % mode)
-  with open(scenario_list_file) as f:
-    scenario_list = f.read().split('\n')
-    scenario_list.pop()
+  #if mode == 'train':
+  #  scenario_list_file = os.path.join(split_dir, 'train.txt')
+  #elif mode == 'eval':
+  #  scenario_list_file = os.path.join(split_dir, 'eval.txt')
+  #elif mode == 'test':
+  #  scenario_list_file = os.path.join(split_dir, 'test.txt')
+  #else:
+  #  raise ValueError("Mode %s is not supported!" % mode)
+  #with open(scenario_list_file) as f:
+  #  scenario_list = f.read().split('\n')
+  #  scenario_list.pop()
 
-  filenames = []
-  labels = []
-  for i, scenario in enumerate(scenario_list):
-    if (i+1) % 100 == 0:
-      print("%s / %s : %s" % (i+1, len(scenario_list), scenario))
-    scenario_dir = os.path.join(data_dir, 'recordings', scenario)
-    if "vcom=0" in scenario and "vpsf=0" in scenario: # stable scenario
-      label = 0.0
-    else: # unstable scenario
-      label = 1.0
-    for img_file in filter(
-        lambda f: f.startswith('rgb-') and f.endswith('-mono-0.png'),
-        os.listdir(scenario_dir)):
-      if 'cam_1-' in img_file:
-        filenames.append(os.path.join(scenario_dir, img_file))
-        labels.append(label)
-      if 'cam_2-' in img_file and num_angles > 1:
-        filenames.append(os.path.join(scenario_dir, img_file))
-        labels.append(label)
-      if 'cam_3-' in img_file and num_angles > 2:
-        filenames.append(os.path.join(scenario_dir, img_file))
-        labels.append(label)
-      if 'cam_4-' in img_file and num_angles > 3:
-        filenames.append(os.path.join(scenario_dir, img_file))
-        labels.append(label)
-      if 'cam_5-' in img_file and num_angles > 4:
-        filenames.append(os.path.join(scenario_dir, img_file))
-        labels.append(label)
-      if 'cam_6-' in img_file and num_angles > 5:
-        filenames.append(os.path.join(scenario_dir, img_file))
-        labels.append(label)
-      if 'cam_7-' in img_file and num_angles > 6:
-        filenames.append(os.path.join(scenario_dir, img_file))
-        labels.append(label)
-      if 'cam_8-' in img_file and num_angles > 7:
-        filenames.append(os.path.join(scenario_dir, img_file))
-        labels.append(label)
-      if 'cam_9-' in img_file and num_angles > 8:
-        filenames.append(os.path.join(scenario_dir, img_file))
-        labels.append(label)
-      if 'cam_10-' in img_file and num_angles > 9:
-        filenames.append(os.path.join(scenario_dir, img_file))
-        labels.append(label)
-      if 'cam_11-' in img_file and num_angles > 10:
-        filenames.append(os.path.join(scenario_dir, img_file))
-        labels.append(label)
-      if 'cam_12-' in img_file and num_angles > 11:
-        filenames.append(os.path.join(scenario_dir, img_file))
-        labels.append(label)
-      if 'cam_13-' in img_file and num_angles > 12:
-        filenames.append(os.path.join(scenario_dir, img_file))
-        labels.append(label)
-      if 'cam_14-' in img_file and num_angles > 13:
-        filenames.append(os.path.join(scenario_dir, img_file))
-        labels.append(label)
-      if 'cam_15-' in img_file and num_angles > 14:
-        filenames.append(os.path.join(scenario_dir, img_file))
-        labels.append(label)
-      if 'cam_16-' in img_file and num_angles > 15:
-        filenames.append(os.path.join(scenario_dir, img_file))
-        labels.append(label)
+  #filenames = []
+  #labels = []
+  #for i, scenario in enumerate(scenario_list):
+  if (i+1) % 100 == 0:
+    print("%s / %s : %s" % (i+1, len(scenario_list), scenario))
+  scenario_dir = os.path.join(data_dir, 'recordings', scenario)
+  if "vcom=0" in scenario and "vpsf=0" in scenario: # stable scenario
+    label = 0.0
+  else: # unstable scenario
+    label = 1.0
+  for img_file in filter(
+      lambda f: f.startswith('rgb-') and f.endswith('-mono-0.png'),
+      os.listdir(scenario_dir)):
+    if 'cam_1-' in img_file:
+      filenames.append(os.path.join(scenario_dir, img_file))
+      labels.append(label)
+    if 'cam_2-' in img_file and num_angles > 1:
+      filenames.append(os.path.join(scenario_dir, img_file))
+      labels.append(label)
+    if 'cam_3-' in img_file and num_angles > 2:
+      filenames.append(os.path.join(scenario_dir, img_file))
+      labels.append(label)
+    if 'cam_4-' in img_file and num_angles > 3:
+      filenames.append(os.path.join(scenario_dir, img_file))
+      labels.append(label)
+    if 'cam_5-' in img_file and num_angles > 4:
+      filenames.append(os.path.join(scenario_dir, img_file))
+      labels.append(label)
+    if 'cam_6-' in img_file and num_angles > 5:
+      filenames.append(os.path.join(scenario_dir, img_file))
+      labels.append(label)
+    if 'cam_7-' in img_file and num_angles > 6:
+      filenames.append(os.path.join(scenario_dir, img_file))
+      labels.append(label)
+    if 'cam_8-' in img_file and num_angles > 7:
+      filenames.append(os.path.join(scenario_dir, img_file))
+      labels.append(label)
+    if 'cam_9-' in img_file and num_angles > 8:
+      filenames.append(os.path.join(scenario_dir, img_file))
+      labels.append(label)
+    if 'cam_10-' in img_file and num_angles > 9:
+      filenames.append(os.path.join(scenario_dir, img_file))
+      labels.append(label)
+    if 'cam_11-' in img_file and num_angles > 10:
+      filenames.append(os.path.join(scenario_dir, img_file))
+      labels.append(label)
+    if 'cam_12-' in img_file and num_angles > 11:
+      filenames.append(os.path.join(scenario_dir, img_file))
+      labels.append(label)
+    if 'cam_13-' in img_file and num_angles > 12:
+      filenames.append(os.path.join(scenario_dir, img_file))
+      labels.append(label)
+    if 'cam_14-' in img_file and num_angles > 13:
+      filenames.append(os.path.join(scenario_dir, img_file))
+      labels.append(label)
+    if 'cam_15-' in img_file and num_angles > 14:
+      filenames.append(os.path.join(scenario_dir, img_file))
+      labels.append(label)
+    if 'cam_16-' in img_file and num_angles > 15:
+      filenames.append(os.path.join(scenario_dir, img_file))
+      labels.append(label)
   return filenames, labels
 
 def _create_dataset(filenames, labels):
@@ -220,7 +220,7 @@ def _center_data(feature, label, rgb_mean):
 
 def shapestacks_input_fn(
     mode, data_dir, split_name,
-    batch_size, num_epochs=1,
+    batch_size, scenario, num_epochs=1,
     n_prefetch=2, augment=[], angle_nums=1):
   """
   Input_fn to feed a tf.estimator.Estimator with ShapeStacks images.
@@ -246,7 +246,7 @@ def shapestacks_input_fn(
       'subtract_mean': subtracts the RGB mean of the data chunk loaded
   """
   split_dir = os.path.join(data_dir, 'splits', split_name)
-  filenames, labels = _get_filenames_with_labels(mode, data_dir, split_dir, angle_nums)
+  filenames, labels = _get_filenames_with_labels(mode, data_dir, scenario, angle_nums)
   rgb_mean_npy = np.load(os.path.join(split_dir, mode + '_bgr_mean.npy'))[[2, 1, 0]]
   dataset = _create_dataset(filenames, labels)
 

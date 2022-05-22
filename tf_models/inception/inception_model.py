@@ -329,9 +329,10 @@ def inception_v4_logregr_model_fn(features, labels, mode, params):
   if mode == tf.estimator.ModeKeys.EVAL:
     # evaluation metrics to monitor
     eval_metric_ops = {
-        'accuracy' : tf.metrics.accuracy(
-            labels=tf.reshape(tf.cast(labels, tf.int32), [-1, 1]),
-            predictions=predictions['classes'])
+        'pred_mean' : tf.metrics.mean(
+            #labels=tf.reshape(tf.cast(labels, tf.int32), [-1, 1]),
+            predictions=predictions['classes']),
+        'label' : tf.metrics.mean(tf.reshape(tf.cast(labels, tf.int32), [-1,1]))
     }
 
   # return EstimatorSpec depending on mode
