@@ -319,7 +319,8 @@ def inception_v4_logregr_model_fn(features, labels, mode, params):
   
   filename = "/content/drive/MyDrive/COMP2550/models/shapestacks-incpv4/shapestacks-cubes/snapshots/real=0.746450/model-outputs.txt"
   with open(filename, "a") as f:
-    f.write('Probabilities %.3f: \n' %(predictions['probabilities']))
+    f.write('Probabilities: \n')
+    f.write(predictions['probabilities'])
     f.close()
 
   # loss function to optimize
