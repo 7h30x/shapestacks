@@ -126,9 +126,11 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
     prediction_mean.append(test_results['pred_mean'])
     print(test_results['label'])
     labels.append(test_results['label'])
-  
-  accuracy = tf.metrics.accuracy(labels=labels, predictions=prediction_mean)
-  print(accuracy)
+  sess = tf.compat.v1.Session()
+  with sess.as_default():
+    accuracy = tf.metrics.accuracy(labels=labels, predictions=prediction_mean)
+    print_op = tf.print(accuracy)
+    sess.run(accuracy)
 
 #   # evaluate the model on real data
 #   if FLAGS.real_data_dir != '':
@@ -143,16 +145,16 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
 #     print(real_results['accuracy'])
 
   # writing accuracies and flags to file
-  filename = "info_" + time.strftime("%m%d_%H%M%S") + ".txt"
-  filename = os.path.join(target_dir, filename)
-  with open(filename, "w") as f:
-    f.write('Test Accuracy %.3f: \n' %(test_results['accuracy']))
-    # f.write('\nAccuracy Real Data %.3f: \n' %(real_results['accuracy']))
-    f.write('\nFLAGS: \n')
-    for key in vars(FLAGS):
-      f.write(key + ': ' + str(vars(FLAGS)[key]) + '\n')
-    f.write("\nUNPARSED_ARGV:\n" + str(UNPARSED_ARGV))
-    f.close()
+  #filename = "info_" + time.strftime("%m%d_%H%M%S") + ".txt"
+  #filename = os.path.join(target_dir, filename)
+  #with open(filename, "w") as f:
+  #  f.write('Test Accuracy %.3f: \n' %(test_results['accuracy']))
+  #  # f.write('\nAccuracy Real Data %.3f: \n' %(real_results['accuracy']))
+  #  f.write('\nFLAGS: \n')
+  #  for key in vars(FLAGS):
+  #    f.write(key + ': ' + str(vars(FLAGS)[key]) + '\n')
+  #  f.write("\nUNPARSED_ARGV:\n" + str(UNPARSED_ARGV))
+  #  f.close()
 
 def main(unparsed_argv):
   """
