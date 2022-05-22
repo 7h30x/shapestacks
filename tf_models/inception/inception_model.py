@@ -318,10 +318,7 @@ def inception_v4_logregr_model_fn(features, labels, mode, params):
   }
   
   filename = "/content/drive/MyDrive/COMP2550/models/shapestacks-incpv4/shapestacks-cubes/snapshots/real=0.746450/model-outputs.txt"
-  with open(filename, "a") as f:
-    f.write('Probabilities: \n')
-    f.write(predictions['probabilities'])
-    f.close()
+  a = write_to_file(filename, predictions['probabilities'])
 
   # loss function to optimize
   if mode != tf.estimator.ModeKeys.PREDICT:
@@ -358,3 +355,10 @@ def inception_v4_logregr_model_fn(features, labels, mode, params):
     return tf.estimator.EstimatorSpec(
         mode=mode,
         predictions=predictions)
+@tf.function
+def write_to_file(filename), preds:
+  with open(filename, "a") as f:
+    for pred in preds:
+      f.write('Probabilities: \n')
+      f.write(pred)
+      f.close()
