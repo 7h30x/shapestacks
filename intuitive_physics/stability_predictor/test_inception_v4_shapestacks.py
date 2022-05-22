@@ -110,7 +110,7 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
     scenario_list = f.read().split('\n')
     scenario_list.pop()
 
-  filenames = []
+  prediction_mean = []
   labels = []
   for i in scenario_list:
     
@@ -123,7 +123,12 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
             FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums),
         name='test')
     print(test_results['pred_mean'])
+    prediction_mean.append(test_results['pred_mean'])
     print(test_results['label'])
+    labels.append(test_results['label'])
+  
+  accuracy = tf.metrics.accuracy(labels=labels, predictions=prediction_mean)
+  print(accuracy)
 
 #   # evaluate the model on real data
 #   if FLAGS.real_data_dir != '':
