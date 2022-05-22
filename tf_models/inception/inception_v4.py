@@ -328,10 +328,8 @@ def inception_v4(inputs, num_classes=1001, is_training=True,
           # 1536
           logits = slim.fully_connected(net, num_classes, activation_fn=None,
                                         scope='Logits')
-          sess = tf.compat.v1.Session()
-          with sess.as_default():
-            nlogits = tf.print(logits)
-          sess.run(nlogits)
+          print("Logits: "+logits)
+          print("Net: "+net)
           end_points['Logits'] = logits
           end_points['Predictions'] = tf.nn.softmax(logits, name='Predictions')
     return logits, end_points
