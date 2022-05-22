@@ -316,10 +316,10 @@ def inception_v4_logregr_model_fn(features, labels, mode, params):
       'probabilities' : log_regr,
       'logits' : tf.identity(logits, name='logits')
   }
-  tf.config.run_functions_eagerly(True)
-  filename = "/content/drive/MyDrive/COMP2550/models/shapestacks-incpv4/shapestacks-cubes/snapshots/real=0.746450/model-outputs.txt"
-  a = write_to_file(filename, predictions['probabilities'])
-  tf.config.run_functions_eagerly(False)
+  #tf.config.run_functions_eagerly(True)
+  #filename = "/content/drive/MyDrive/COMP2550/models/shapestacks-incpv4/shapestacks-cubes/snapshots/real=0.746450/model-outputs.txt"
+  #a = write_to_file(filename, predictions['probabilities'])
+  #tf.config.run_functions_eagerly(False)
 
   # loss function to optimize
   if mode != tf.estimator.ModeKeys.PREDICT:
