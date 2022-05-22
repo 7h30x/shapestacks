@@ -356,7 +356,7 @@ def inception_v4_logregr_model_fn(features, labels, mode, params):
         mode=mode,
         predictions=predictions)
 @tf.function
-def write_to_file(filename), preds:
+def write_to_file(filename, preds):
   with open(filename, "a") as f:
     for pred in preds:
       f.write('Probabilities: \n')
