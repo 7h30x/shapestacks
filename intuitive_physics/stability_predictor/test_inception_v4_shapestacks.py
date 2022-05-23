@@ -152,9 +152,11 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
     #prediction_mean.append(test_results['pred_mean'])
     #print(test_results['label'])
     #labels.append(test_results['label'])
+  tf.config.run_functions_eagerly(True)
+  arr = prediction_mean.numpy()
   total = 0.0
-  for i, pred in enumerate(prediction_mean):
-    print(tf.size(pred))
+  for i, pred in enumerate(arr):
+    print(pred)
     print(labels[i])
     total += (pred - labels[i]) ** 2
   total = total / len(prediction_mean)
