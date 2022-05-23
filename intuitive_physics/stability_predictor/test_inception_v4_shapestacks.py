@@ -78,8 +78,8 @@ ARGPARSER.add_argument(
 @tf.function
 def call(comb):
   dims = tf.shape(comb)
-  dim1 = comb.set_shape[dims]
-  dim2 = comb.set_shape[dims]
+  dim1 = comb.set_shape([dims])
+  dim2 = comb.set_shape([dims])
   return tf.metrics.mean_tensor(dim1,dim2)
 
 def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
