@@ -96,12 +96,12 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   run_config = tf.estimator.RunConfig(
       session_config=sess_config,
   )
-  classifier = tf.estimator.Estimator(
-      model_fn=inception_v4_logregr_model_fn,
-      model_dir=target_dir,
-      config=run_config,
-      params={'num_display_images' : FLAGS.display_inputs}
-      )
+  #classifier = tf.estimator.Estimator(
+  #    model_fn=inception_v4_logregr_model_fn,
+  #    model_dir=target_dir,
+  #    config=run_config,
+  #    params={'num_display_images' : FLAGS.display_inputs}
+  #    )
 
   split_dir = os.path.join(FLAGS.data_dir, 'splits', FLAGS.split_name)
   scenario_list_file = os.path.join(split_dir, 'eval.txt')
