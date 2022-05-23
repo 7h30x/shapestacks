@@ -121,39 +121,23 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   prediction_mean = []
   labels = []
   num = 0
-  i = scenario_list[0]#for num, i in enumerate(scenario_list):
-  features, labels = shapestacks_input_fn('eval', FLAGS.data_dir, FLAGS.split_name, FLAGS.batch_size, i, num, FLAGS.epochs_per_eval, FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums)
-  #c = inception_v4_base(features)
-  a = inception_v4(features, 1, False, reuse=tf.AUTO_REUSE)
-  #sess = tf.compat.v1.Session()
-  #sess.run(c)
-  #tf.reset_default_graph()
-  num = 1
-  features, labels = shapestacks_input_fn('eval', FLAGS.data_dir, FLAGS.split_name, FLAGS.batch_size, i, num, FLAGS.epochs_per_eval, FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums)
-  b = inception_v4(features, 1, False, reuse=tf.AUTO_REUSE)
-  #print(b[1])
-  #d = inception_v4_base(features)
-  #sess1 = tf.compat.v1.Session()
-  #sess1.run(d)
-  #c = tf.get_variable("InceptionV4_1/Logits/PreLogitsFlatten/flatten/Reshape:0") #'PreLogitsFlatten'
-  #d = tf.get_variable("InceptionV4/Logits/Logits")
-  #c = a[1]['PreLogitsFlatten']
-  cl = a[1]['Logits']
-  c = tf.keras.metrics.Sum()
-  c.update_state(cl)
-  #d = b[1]['PreLogitsFlatten']
-  dl = b[1]['Logits']
-  d = tf.keras.metrics.Sum()
-  d.update_state(dl)
-  e = c.result() + d.result()
-  e = tf.nn.sigmoid(e)
-  print(e)
-  #print(d)
-  #e = tf.data.Dataset.from_tensor_slices((cl,dl))
-  #e = tf.convert_to_tensor(e)
-  #f = tf.math.reduce_mean(e,1)
-  #print(f)
-  #g = tf.metrics.mean(tf.flatten(f))
+  i = scenario_list[0]
+  for i in scenario_list:
+    tot = 0.0
+    for num in range(FLAGS.angle_nums):
+      features, label = shapestacks_input_fn('eval', FLAGS.data_dir, FLAGS.split_name, FLAGS.batch_size, i, num, FLAGS.epochs_per_eval, FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums)
+      if num == 0:
+        labels.append(label)
+      a = inception_v4(features, 1, False, reuse=tf.AUTO_REUSE)
+      b = a[1]['Logits']
+      c = tf.keras.metrics.Sum()
+      c.update_state(b)
+      tot += c.result()
+    tot = tot / FLAGS.angle_nums
+    sig = tf.nn.sigmoid(tot)
+    prediction_mean.append(sig)
+  
+
   #for j,k in enumerate(c):
   #  e.append(tf.mean([k,d[j]]))
   #print(e)
@@ -171,10 +155,10 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
     #print(test_results['label'])
     #labels.append(test_results['label'])
   #total = 0.0
-  #for i, pred in enumerate(prediction_mean):
-  #  total += (pred - labels[i]) ** 2
-  #total = total / len(prediction_mean)
-  #print(total)
+  for i, pred in enumerate(prediction_mean):
+    total += (pred[0] - labels[i]) ** 2
+  total = total / len(prediction_mean)
+  print(total)
 
 #   # evaluate the model on real data
 #   if FLAGS.real_data_dir != '':
