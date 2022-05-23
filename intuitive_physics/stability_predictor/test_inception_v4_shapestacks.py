@@ -137,10 +137,10 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   #c = tf.get_variable("InceptionV4_1/Logits/PreLogitsFlatten/flatten/Reshape:0") #'PreLogitsFlatten'
   #d = tf.get_variable("InceptionV4/Logits/Logits")
   #c = a[1]['PreLogitsFlatten']
-  cl = a[1]['Logits']
+  cl = a[1]['Predictions']
   print(cl)
   #d = b[1]['PreLogitsFlatten']
-  dl = b[1]['Logits']
+  dl = b[1]['Predictions']
   e = tf.metrics.mean_tensor(cl,dl)
   print(e)
   #print(d)
