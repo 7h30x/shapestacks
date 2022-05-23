@@ -132,12 +132,14 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   for i in scenario_list:
     tot = 0.0
     for num in range(FLAGS.angle_nums):
+      session = tf.compat.v1.Session()
       c, label = session.run(call(a,b), feed_dict={a: i, b: num})
       if num == 0:
         labels.append(label)
       tot += c.result()
     tot = tot / FLAGS.angle_nums
-    sig = session.run(sigmoid(a), feed_dict={a: tot})
+    sess = tf.compat.v1.Session()
+    sig = sess.run(sigmoid(a), feed_dict={a: tot})
     prediction_mean.append(sig)
   
 
