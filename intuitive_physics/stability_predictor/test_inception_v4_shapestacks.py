@@ -141,10 +141,10 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   print(cl)
   #d = b[1]['PreLogitsFlatten']
   dl = b[1]['Logits']
-  print(d)
+  #print(d)
   e = tf.data.Dataset.from_tensor_slices((cl,dl))
-  #f = get_mean(e)
-  #print(f)
+  f = get_mean(e)
+  print(f)
   #for j,k in enumerate(c):
   #  e.append(tf.mean([k,d[j]]))
   #print(e)
