@@ -144,7 +144,7 @@ def block_inception_c(inputs, scope=None, reuse=None):
       return tf.concat(axis=3, values=[branch_0, branch_1, branch_2, branch_3])
 
 
-def inception_v4_base(ite, inputs, final_endpoint='Mixed_7d', scope=None):
+def inception_v4_base(inputs, final_endpoint='Mixed_7d', scope=None):
   """Creates the Inception V4 network up to the given final endpoint.
 
   Args:
@@ -170,12 +170,12 @@ def inception_v4_base(ite, inputs, final_endpoint='Mixed_7d', scope=None):
     end_points[name] = net
     return name == final_endpoint
 
-  with tf.variable_scope(scope, 'InceptionV4', [ite, inputs]):
+  with tf.variable_scope(scope, 'InceptionV4', [inputs]):
     with slim.arg_scope([slim.conv2d, slim.max_pool2d, slim.avg_pool2d],
                         stride=1, padding='SAME'):
       # 299 x 299 x 3
       net = slim.conv2d(inputs, 32, [3, 3], stride=2,
-                        padding='VALID', scope=('Conv2d_1a_3x3'+ite))
+                        padding='VALID', scope=('Conv2d_1a_3x3'))
       if add_and_check_final('Conv2d_1a_3x3', net): return net, end_points
       # 149 x 149 x 32
       net = slim.conv2d(net, 32, [3, 3], padding='VALID',
@@ -254,7 +254,7 @@ def inception_v4_base(ite, inputs, final_endpoint='Mixed_7d', scope=None):
   raise ValueError('Unknown final endpoint %s' % final_endpoint)
 
 
-def inception_v4(ite, inputs, num_classes=1001, is_training=True,
+def inception_v4(inputs, num_classes=1001, is_training=True,
                  dropout_keep_prob=0.8,
                  reuse=None,
                  scope='InceptionV4',
@@ -280,10 +280,10 @@ def inception_v4(ite, inputs, num_classes=1001, is_training=True,
     end_points: the set of end_points from the inception model.
   """
   end_points = {}
-  with tf.variable_scope(scope, 'InceptionV4', [ite, inputs], reuse=reuse) as scope:
+  with tf.variable_scope(scope, 'InceptionV4', [inputs], reuse=reuse) as scope:
     with slim.arg_scope([slim.batch_norm, slim.dropout],
                         is_training=is_training):
-      net, end_points = inception_v4_base(inputs, ite, scope=scope)
+      net, end_points = inception_v4_base(inputs, scope=scope)
 
       with slim.arg_scope([slim.conv2d, slim.max_pool2d, slim.avg_pool2d],
                           stride=1, padding='SAME'):
