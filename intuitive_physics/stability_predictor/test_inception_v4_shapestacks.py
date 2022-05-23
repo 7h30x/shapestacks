@@ -12,7 +12,8 @@ import os
 import shutil
 import argparse
 import time
-import tensorflow as tf
+#import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 sys.path.insert(0, os.environ['SHAPESTACKS_CODE_HOME'])
 from tf_models.inception.inception_model import inception_v4_logregr_model_fn
@@ -152,7 +153,10 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
     #prediction_mean.append(test_results['pred_mean'])
     #print(test_results['label'])
     #labels.append(test_results['label'])
-  tf.config.run_functions_eagerly(True)
+  tf.config.experimental_run_functions_eagerly(True)
+  final(prediction_mean, labels)
+@tf.function
+def final(prediction_mean, labels)
   arr = prediction_mean.numpy()
   total = 0.0
   for i, pred in enumerate(arr):
