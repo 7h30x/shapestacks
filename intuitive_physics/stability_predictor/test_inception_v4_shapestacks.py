@@ -128,11 +128,11 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   #d = inception_v4_base(features)
   #sess1 = tf.compat.v1.Session()
   #sess1.run(d)
-  c = tf.get_variable("InceptionV4_1/Logits/PreLogitsFlatten/flatten/Reshape:0") #'PreLogitsFlatten'
+  #c = tf.get_variable("InceptionV4_1/Logits/PreLogitsFlatten/flatten/Reshape:0") #'PreLogitsFlatten'
   #d = tf.get_variable("InceptionV4/Logits/Logits")
   print(a)
   print(b)
-  print(c)
+  #print(c)
 
   # evaluate the model on the corresponding test set
     #test_results = classifier.evaluate(
