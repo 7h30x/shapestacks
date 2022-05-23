@@ -145,8 +145,8 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   d = tf.shape(dl)[1]
   print(c)
   print(d)
-  cl = cl.set_shape(1,1)
-  dl = dl.set_shape(1,1)
+  cl = cl.set_shape([c,d])
+  dl = dl.set_shape([c,d])
   e = tf.metrics.mean_tensor(cl,dl)
   print(e)
   #print(d)
