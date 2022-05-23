@@ -77,7 +77,7 @@ ARGPARSER.add_argument(
 
 @tf.function
 def get_mean(comb):
-  f = []
+  f = tf.TensorArray(dtype=tf.float32,size=0,dynamic_size=True)
   for j in comb:
     f.append(tf.metrics.mean([j[0],j[1]]))
   return f
