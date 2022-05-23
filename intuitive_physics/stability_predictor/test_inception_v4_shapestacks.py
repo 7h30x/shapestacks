@@ -118,7 +118,7 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
     scenario_list = f.read().split('\n')
     scenario_list.pop()
 
-  prediction_mean = tf.TensorArray(tf.float32, [], dynamic_size=True)
+  prediction_mean = tf.TensorArray(tf.float32, 0, dynamic_size=True)
   labels = []
   num = 0
   i = scenario_list[0]
