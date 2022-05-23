@@ -17,6 +17,7 @@ import tensorflow as tf
 sys.path.insert(0, os.environ['SHAPESTACKS_CODE_HOME'])
 from tf_models.inception.inception_model import inception_v4_logregr_model_fn
 from tf_models.inception.inception_v4 import inception_v4
+from tf_models.inception.inception_v4 import inception_v4_base
 from data_provider.shapestacks_provider import shapestacks_input_fn
 # from data_provider.fairblocks_provider import fairblocks_real_input_fn
 
@@ -116,15 +117,17 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   num = 0
   i = scenario_list[0]#for num, i in enumerate(scenario_list):
   features, labels = shapestacks_input_fn('eval', FLAGS.data_dir, FLAGS.split_name, FLAGS.batch_size, i, num, FLAGS.epochs_per_eval, FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums)
-  a = inception_v4(features, 1, False)
+  c = inception_v4_base(features)
+  #a = inception_v4(features, 1, False)
   sess = tf.compat.v1.Session()
-  sess.run(a)
+  sess.run(c)
   tf.reset_default_graph()
   num = 1
   features, labels = shapestacks_input_fn('eval', FLAGS.data_dir, FLAGS.split_name, FLAGS.batch_size, i, num, FLAGS.epochs_per_eval, FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums)
-  b = inception_v4(features, 1, False)
+  #b = inception_v4(features, 1, False)
+  d = inception_v4_base(features)
   sess1 = tf.compat.v1.Session()
-  sess1.run(b)
+  sess1.run(d)
   print(a)
   print(b)
 
