@@ -76,11 +76,11 @@ ARGPARSER.add_argument(
     help='How many batches to prefetch into RAM.')
 
 @tf.function
-def get_mean(comb):
-  f = tf.TensorArray(dtype=tf.float32,size=0,dynamic_size=True)
-  for i,j in enumerate(comb):
-    f = f.write(i,tf.metrics.mean([j[0],j[1]]))
-  return f.stack()
+def call(comb):
+  dims = tf.shape(comb)
+  dim1 = dims[0]
+  dim2 = dims[1]
+  return dim1,dim2
 
 def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   """
@@ -141,9 +141,7 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   cl = a[1]['Logits']
   #d = b[1]['PreLogitsFlatten']
   dl = b[1]['Logits']
-  c = tf.shape(cl)
-  d = c[1]
-  c = c[0]
+  c,d = call(cl)
   print(c)
   print(d)
   cl = cl.set_shape([c,d])
