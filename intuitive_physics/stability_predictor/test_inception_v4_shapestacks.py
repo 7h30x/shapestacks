@@ -87,7 +87,7 @@ def call(i,num):
   b = a[1]['Logits']
   c = tf.keras.metrics.Sum()
   c.update_state(b)
-  return c.result().numpy(), label
+  return c.result(), label
 
 def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   """
