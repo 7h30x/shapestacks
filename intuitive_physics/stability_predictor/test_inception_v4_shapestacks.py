@@ -131,6 +131,7 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   num = 1
   features, labels = shapestacks_input_fn('eval', FLAGS.data_dir, FLAGS.split_name, FLAGS.batch_size, i, num, FLAGS.epochs_per_eval, FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums)
   b = inception_v4(features, 1, False, reuse=tf.AUTO_REUSE)
+  print(b[1])
   #d = inception_v4_base(features)
   #sess1 = tf.compat.v1.Session()
   #sess1.run(d)
