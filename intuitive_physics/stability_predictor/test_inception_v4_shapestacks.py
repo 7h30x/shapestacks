@@ -157,6 +157,7 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   total = 0.0
   for i, pred in enumerate(prediction_mean):
     print(tf.size(pred))
+    print(labels[i])
     total += (pred - labels[i]) ** 2
   total = total / len(prediction_mean)
   print(total)
