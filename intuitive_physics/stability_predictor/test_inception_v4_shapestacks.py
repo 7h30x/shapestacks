@@ -133,9 +133,13 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   c = a[1]['PreLogitsFlatten']
   d = b[1]['PreLogitsFlatten']
   e = tf.data.Dataset.from_tensor_slices((c,d))
-  f = []
-  for j in enumerate(e):
-    f.append(tf.mean([j[0].j[1]]))
+  @tf.function
+  def get_mean(comb):
+    f = []
+    for j in comb:
+      f.append(tf.mean([j[0],j[1]])
+    return f
+  f = get_mean(e)
   print(f)
   #for j,k in enumerate(c):
   #  e.append(tf.mean([k,d[j]]))
