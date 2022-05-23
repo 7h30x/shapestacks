@@ -275,7 +275,7 @@ def inception_v4_model_fn(features, labels, mode, params):
         mode=mode,
         predictions=predictions)
 
-def inception_v4_logregr_model_fn(features, labels, mode, params):
+def inception_v4_logregr_model_fn(features, labels, mode, params, ite):
   """
   Sets up an InceptionV4 based logistic regression model for training and
   evaluation phases.
@@ -304,6 +304,7 @@ def inception_v4_logregr_model_fn(features, labels, mode, params):
   # construct graph
   logits, endpoints = inception_v4(
       inputs=features,
+      ite,
       num_classes=num_classes,
       is_training=False)
   for _, endpoint in endpoints.items():
