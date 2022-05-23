@@ -76,7 +76,7 @@ ARGPARSER.add_argument(
     help='How many batches to prefetch into RAM.')
 
 @tf.function
-def call(i,num):
+def call(comb):
   dims = tf.shape(comb)
   dim1 = comb.set_shape(dims)
   dim2 = comb.set_shape(dims)
@@ -125,7 +125,6 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   for count, i in enumerate(scenario_list):
     tot = tf.keras.metrics.Sum()
     for num in range(FLAGS.angle_nums):
-      call(i,num)
       features, label = shapestacks_input_fn('eval', FLAGS.data_dir, FLAGS.split_name, FLAGS.batch_size, i, num, FLAGS.epochs_per_eval, FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums)
       if num == 0:
         labels.append(label)
