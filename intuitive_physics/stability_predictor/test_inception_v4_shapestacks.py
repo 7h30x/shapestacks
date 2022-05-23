@@ -130,7 +130,7 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   #sess1.run(d)
   #c = tf.get_variable("InceptionV4_1/Logits/PreLogitsFlatten/flatten/Reshape:0") #'PreLogitsFlatten'
   #d = tf.get_variable("InceptionV4/Logits/Logits")
-  print(a[1])
+  print(a[1]['PreLogitsFlatten'])
   print(b)
   #print(c)
 
