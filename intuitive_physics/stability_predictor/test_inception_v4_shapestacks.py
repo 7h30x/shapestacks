@@ -79,7 +79,7 @@ ARGPARSER.add_argument(
 def get_mean(comb):
   f = []
   for j in comb:
-    f.append(tf.mean([j[0],j[1]])
+    f.append(tf.mean([j[0],j[1]]))
   return f
 
 def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
