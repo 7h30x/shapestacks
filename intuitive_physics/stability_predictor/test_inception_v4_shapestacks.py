@@ -13,6 +13,7 @@ import shutil
 import argparse
 import time
 import tensorflow as tf
+import numpy
 
 sys.path.insert(0, os.environ['SHAPESTACKS_CODE_HOME'])
 from tf_models.inception.inception_model import inception_v4_logregr_model_fn
@@ -76,11 +77,17 @@ ARGPARSER.add_argument(
     help='How many batches to prefetch into RAM.')
 
 @tf.function
-def call(comb):
-  dims = tf.shape(comb)
-  dim1 = comb.set_shape(dims)
-  dim2 = comb.set_shape(dims)
-  return tf.metrics.mean_tensor(dim1,dim2)
+def sigmoid(tot):
+  return tf.nn.sigmoid(tot)
+
+@tf.function
+def call(i,num):
+  features, label = shapestacks_input_fn('eval', FLAGS.data_dir, FLAGS.split_name, FLAGS.batch_size, i, num, FLAGS.epochs_per_eval, FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums)
+  a = inception_v4(features, 1, False, reuse=tf.AUTO_REUSE)
+  b = a[1]['Logits']
+  c = tf.keras.metrics.Sum()
+  c.update_state(b)
+  return c.result().numpy(), label
 
 def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   """
@@ -125,16 +132,12 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   for i in scenario_list:
     tot = 0.0
     for num in range(FLAGS.angle_nums):
-      features, label = shapestacks_input_fn('eval', FLAGS.data_dir, FLAGS.split_name, FLAGS.batch_size, i, num, FLAGS.epochs_per_eval, FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums)
+      c, label = call(i,num)
       if num == 0:
         labels.append(label)
-      a = inception_v4(features, 1, False, reuse=tf.AUTO_REUSE)
-      b = a[1]['Logits']
-      c = tf.keras.metrics.Sum()
-      c.update_state(b)
       tot += c.result()
     tot = tot / FLAGS.angle_nums
-    sig = tf.nn.sigmoid(tot)
+    sig = sigmoid(tot)
     prediction_mean.append(sig)
   
 
