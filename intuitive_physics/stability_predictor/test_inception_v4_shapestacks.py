@@ -141,8 +141,9 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   cl = a[1]['Logits']
   #d = b[1]['PreLogitsFlatten']
   dl = b[1]['Logits']
-  c = tf.shape(cl)[0]
-  d = tf.shape(dl)[1]
+  c = tf.shape(cl)
+  d = c[1]
+  c = c[0]
   print(c)
   print(d)
   cl = cl.set_shape([c,d])
