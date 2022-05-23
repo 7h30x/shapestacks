@@ -130,9 +130,7 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
         labels.append(label)
       a = inception_v4(features, 1, False, reuse=tf.AUTO_REUSE)
       b = a[1]['Logits']
-      c = tf.keras.metrics.Sum()
-      c.update_state(b)
-      tot.update_state(c)
+      tot.update_state(b)
     tot = tf.math.divide(tot, FLAGS.angle_nums)
     sig = tf.nn.sigmoid(tot)
     prediction_mean.write(count,sig)
