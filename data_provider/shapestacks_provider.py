@@ -29,7 +29,7 @@ _CROP_WIDTH = 196
 
 # ---------- file-parsing, pre-processing and augmentation ----------
 
-def _get_filenames_with_labels(mode, data_dir, scenario, num_angles):
+def _get_filenames_with_labels(mode, data_dir, scenario, num_angles, curr):
   """
   Returns all training or test files in the data directory with their
   respective labels.
