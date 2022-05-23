@@ -13,7 +13,6 @@ import shutil
 import argparse
 import time
 import tensorflow as tf
-import numpy
 
 sys.path.insert(0, os.environ['SHAPESTACKS_CODE_HOME'])
 from tf_models.inception.inception_model import inception_v4_logregr_model_fn
@@ -77,17 +76,11 @@ ARGPARSER.add_argument(
     help='How many batches to prefetch into RAM.')
 
 @tf.function
-def sigmoid(tot):
-  return tf.nn.sigmoid(tot)
-
-@tf.function
 def call(i,num):
-  features, label = shapestacks_input_fn('eval', FLAGS.data_dir, FLAGS.split_name, FLAGS.batch_size, i, num, FLAGS.epochs_per_eval, FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums)
-  a = inception_v4(features, 1, False, reuse=tf.AUTO_REUSE)
-  b = a[1]['Logits']
-  c = tf.keras.metrics.Sum()
-  c.update_state(b)
-  return c.result(), label
+  dims = tf.shape(comb)
+  dim1 = comb.set_shape(dims)
+  dim2 = comb.set_shape(dims)
+  return tf.metrics.mean_tensor(dim1,dim2)
 
 def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   """
@@ -125,22 +118,25 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
     scenario_list = f.read().split('\n')
     scenario_list.pop()
 
-  prediction_mean = []
+  prediction_mean = tf.TensorArray(float32, [], dynamic_size=True)
   labels = []
   num = 0
   i = scenario_list[0]
-  for i in scenario_list:
-    tot = 0.0
+  for count, i in enumerate(scenario_list):
+    tot = tf.keras.metrics.Sum()
     for num in range(FLAGS.angle_nums):
-      session = tf.compat.v1.Session()
-      c, label = session.run(call(i,num))
+      call(i,num)
+      features, label = shapestacks_input_fn('eval', FLAGS.data_dir, FLAGS.split_name, FLAGS.batch_size, i, num, FLAGS.epochs_per_eval, FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums)
       if num == 0:
         labels.append(label)
-      tot += c.result()
-    tot = tot / FLAGS.angle_nums
-    sess = tf.compat.v1.Session()
-    sig = sess.run(sigmoid(tot))
-    prediction_mean.append(sig)
+      a = inception_v4(features, 1, False, reuse=tf.AUTO_REUSE)
+      b = a[1]['Logits']
+      c = tf.keras.metrics.Sum()
+      c.update_state(b)
+      tot.update_state(c)
+    tot = tf.math.divide(tot, FLAGS.angle_nums)
+    sig = tf.nn.sigmoid(tot)
+    prediction_mean.write(count,sig)
   
 
   #for j,k in enumerate(c):
