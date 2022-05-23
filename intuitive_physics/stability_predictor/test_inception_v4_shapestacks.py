@@ -112,20 +112,21 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
 
   prediction_mean = []
   labels = []
-  for i in scenario_list:
-    
+  for num, i in enumerate(scenario_list):
+    features, labels = shapestacks_input_fn('eval', FLAGS.data_dir, FLAGS.split_name, FLAGS.batch_size, i, num, FLAGS.epochs_per_eval, FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums)
+    inception_v4_logregr_model_fn(features, labels, 'eval', [])
 
   # evaluate the model on the corresponding test set
-    test_results = classifier.evaluate(
-        input_fn=lambda: shapestacks_input_fn(
-            'eval', FLAGS.data_dir, FLAGS.split_name,
-            FLAGS.batch_size, i, FLAGS.epochs_per_eval,
-            FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums),
-        name='test')
-    print(test_results['pred_mean'])
-    prediction_mean.append(test_results['pred_mean'])
-    print(test_results['label'])
-    labels.append(test_results['label'])
+    #test_results = classifier.evaluate(
+    #    input_fn=lambda: shapestacks_input_fn(
+    #        'eval', FLAGS.data_dir, FLAGS.split_name,
+    #        FLAGS.batch_size, i, FLAGS.epochs_per_eval,
+    #        FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums),
+    #    name='test')
+    #print(test_results['pred_mean'])
+    #prediction_mean.append(test_results['pred_mean'])
+    #print(test_results['label'])
+    #labels.append(test_results['label'])
   total = 0.0
   for i, pred in enumerate(prediction_mean):
     total += (pred - labels[i]) ** 2
