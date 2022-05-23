@@ -133,9 +133,10 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   c = a[1]['PreLogitsFlatten']
   d = b[1]['PreLogitsFlatten']
   e = []
-  for j,k in enumerate(c):
-    e.append(tf.mean([k,d[j]]))
-  print(e)
+  print(tf.size(c))
+  #for j,k in enumerate(c):
+  #  e.append(tf.mean([k,d[j]]))
+  #print(e)
   #print(c)
 
   # evaluate the model on the corresponding test set
