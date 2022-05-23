@@ -305,7 +305,7 @@ def inception_v4_logregr_model_fn(features, labels, mode, params):
   logits, endpoints = inception_v4(
       inputs=features,
       num_classes=num_classes,
-      is_training=(False)
+      is_training=False)
   for _, endpoint in endpoints.items():
     tf.add_to_collection('inception_v4_endpoints', endpoint)
 
