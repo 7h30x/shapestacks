@@ -132,12 +132,12 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   for i in scenario_list:
     tot = 0.0
     for num in range(FLAGS.angle_nums):
-      c, label = call(i,num)
+      c, label = session.run(call(a,b), feed_dict={a: i, b: num})
       if num == 0:
         labels.append(label)
       tot += c.result()
     tot = tot / FLAGS.angle_nums
-    sig = sigmoid(tot)
+    sig = session.run(sigmoid(a), feed_dict={a: tot})
     prediction_mean.append(sig)
   
 
