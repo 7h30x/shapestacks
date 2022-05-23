@@ -62,49 +62,49 @@ def _get_filenames_with_labels(mode, data_dir, scenario, num_angles, curr):
     if 'cam_1-' in img_file and num_angles - curr > 0:
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
-    if 'cam_2-' in img_file and num_angles - curr > 1:
+    elif 'cam_2-' in img_file and num_angles - curr > 1:
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
-    if 'cam_3-' in img_file and num_angles - curr > 2:
+    elif 'cam_3-' in img_file and num_angles - curr > 2:
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
-    if 'cam_4-' in img_file and num_angles - curr > 3:
+    elif 'cam_4-' in img_file and num_angles - curr > 3:
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
-    if 'cam_5-' in img_file and num_angles - curr > 4:
+    elif 'cam_5-' in img_file and num_angles - curr > 4:
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
-    if 'cam_6-' in img_file and num_angles - curr > 5:
+    elif 'cam_6-' in img_file and num_angles - curr > 5:
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
-    if 'cam_7-' in img_file and num_angles - curr > 6:
+    elif 'cam_7-' in img_file and num_angles - curr > 6:
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
-    if 'cam_8-' in img_file and num_angles - curr > 7:
+    elif 'cam_8-' in img_file and num_angles - curr > 7:
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
-    if 'cam_9-' in img_file and num_angles - curr > 8:
+    elif 'cam_9-' in img_file and num_angles - curr > 8:
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
     if 'cam_10-' in img_file and num_angles - curr > 9:
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
-    if 'cam_11-' in img_file and num_angles - curr > 10:
+    elif 'cam_11-' in img_file and num_angles - curr > 10:
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
-    if 'cam_12-' in img_file and num_angles - curr > 11:
+    elif 'cam_12-' in img_file and num_angles - curr > 11:
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
-    if 'cam_13-' in img_file and num_angles - curr > 12:
+    elif 'cam_13-' in img_file and num_angles - curr > 12:
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
     if 'cam_14-' in img_file and num_angles - curr > 13:
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
-    if 'cam_15-' in img_file and num_angles - curr > 14:
+    elif 'cam_15-' in img_file and num_angles - curr > 14:
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
-    if 'cam_16-' in img_file and num_angles - curr > 15:
+    elif 'cam_16-' in img_file and num_angles - curr > 15:
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
   return filenames, labels
