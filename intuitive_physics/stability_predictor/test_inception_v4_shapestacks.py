@@ -131,7 +131,7 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
       a = inception_v4(features, 1, False, reuse=tf.AUTO_REUSE)
       b = a[1]['Logits']
       tot.update_state(b)
-    tot = tf.math.divide(tot, FLAGS.angle_nums)
+    tot = tf.math.divide(tot.result(), FLAGS.angle_nums)
     sig = tf.nn.sigmoid(tot)
     prediction_mean.write(count,sig)
   
