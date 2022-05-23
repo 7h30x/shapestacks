@@ -128,8 +128,8 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   #d = inception_v4_base(features)
   #sess1 = tf.compat.v1.Session()
   #sess1.run(d)
-  print(a)
-  print(b)
+  print(tf.metrics.mean(a))
+  print(tf.metrics.mean(b))
 
   # evaluate the model on the corresponding test set
     #test_results = classifier.evaluate(

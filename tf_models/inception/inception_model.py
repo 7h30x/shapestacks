@@ -308,6 +308,7 @@ def inception_v4_logregr_model_fn(features, labels, mode, params, ite):
       is_training=False)
   for _, endpoint in endpoints.items():
     tf.add_to_collection('inception_v4_endpoints', endpoint)
+  return logits
 
   # predictions to make
   log_regr = tf.nn.sigmoid(logits, name='sigmoid')
@@ -316,7 +317,6 @@ def inception_v4_logregr_model_fn(features, labels, mode, params, ite):
       'probabilities' : log_regr,
       'logits' : tf.identity(logits, name='logits')
   }
-  return predictions
   #tf.config.run_functions_eagerly(True)
   #filename = "/content/drive/MyDrive/COMP2550/models/shapestacks-incpv4/shapestacks-cubes/snapshots/real=0.746450/model-outputs.txt"
   #a = write_to_file(filename, predictions['probabilities'])
