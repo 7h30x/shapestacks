@@ -303,8 +303,8 @@ def inception_v4_logregr_model_fn(features, labels, mode, params, ite):
 
   # construct graph
   logits, endpoints = inception_v4(
-      inputs=features,
       ite,
+      inputs=features,
       num_classes=num_classes,
       is_training=False)
   for _, endpoint in endpoints.items():

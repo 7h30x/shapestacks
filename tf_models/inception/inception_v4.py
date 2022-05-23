@@ -254,7 +254,7 @@ def inception_v4_base(inputs, final_endpoint='Mixed_7d', scope=None):
   raise ValueError('Unknown final endpoint %s' % final_endpoint)
 
 
-def inception_v4(inputs, ite, num_classes=1001, is_training=True,
+def inception_v4(ite, inputs, num_classes=1001, is_training=True,
                  dropout_keep_prob=0.8,
                  reuse=None,
                  scope='InceptionV4',
