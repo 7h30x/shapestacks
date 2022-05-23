@@ -175,7 +175,7 @@ def inception_v4_base(inputs, final_endpoint='Mixed_7d', scope=None):
                         stride=1, padding='SAME'):
       # 299 x 299 x 3
       net = slim.conv2d(inputs, 32, [3, 3], stride=2,
-                        padding='VALID', scope='Conv2d_1a_3x3')
+                        padding='VALID', scope='Conv2d_1a_3x3',reuse=reuse)
       if add_and_check_final('Conv2d_1a_3x3', net): return net, end_points
       # 149 x 149 x 32
       net = slim.conv2d(net, 32, [3, 3], padding='VALID',
