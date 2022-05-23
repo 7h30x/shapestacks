@@ -127,7 +127,7 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
     print(test_results['label'])
     labels.append(test_results['label'])
   prediction_mean.sort()
-  print(prediction_mean[round(len(prediction_mean) / 2)
+  print(prediction_mean[round(len(prediction_mean) / 2))
   #total = 0.0
   #for i, pred in enumerate(prediction_mean):
   #  total += (pred - labels[i]) ** 2
