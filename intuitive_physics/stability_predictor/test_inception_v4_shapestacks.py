@@ -139,11 +139,13 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   #d = tf.get_variable("InceptionV4/Logits/Logits")
   #c = a[1]['PreLogitsFlatten']
   cl = a[1]['Logits']
-  c = tf.keras.metrics.Sum(cl)
+  c = tf.keras.metrics.Sum()
+  c.update_state(cl)
   #d = b[1]['PreLogitsFlatten']
   dl = b[1]['Logits']
-  d = tf.keras.metrics.Sum(dl)
-  e = c + d
+  d = tf.keras.metrics.Sum()
+  d.update_state(dl)
+  e = c.result() + d.result()
   e = tf.nn.sigmoid(e)
   print(e)
   #print(d)
