@@ -185,7 +185,7 @@ def inception_v4_base(inputs, final_endpoint='Mixed_7d', scope=None):
       net = slim.conv2d(net, 64, [3, 3], scope='Conv2d_2b_3x3')
       if add_and_check_final('Conv2d_2b_3x3', net): return net, end_points
       # 147 x 147 x 64
-      with tf.variable_scope('Mixed_3a',reuse=reuse):
+      with tf.variable_scope('Mixed_3a'):
         with tf.variable_scope('Branch_0',reuse=reuse):
           branch_0 = slim.max_pool2d(net, [3, 3], stride=2, padding='VALID',
                                      scope='MaxPool_0a_3x3')
@@ -196,7 +196,7 @@ def inception_v4_base(inputs, final_endpoint='Mixed_7d', scope=None):
         if add_and_check_final('Mixed_3a', net): return net, end_points
 
       # 73 x 73 x 160
-      with tf.variable_scope('Mixed_4a',reuse=reuse):
+      with tf.variable_scope('Mixed_4a'):
         with tf.variable_scope('Branch_0',reuse=reuse):
           branch_0 = slim.conv2d(net, 64, [1, 1], scope='Conv2d_0a_1x1')
           branch_0 = slim.conv2d(branch_0, 96, [3, 3], padding='VALID',
@@ -211,7 +211,7 @@ def inception_v4_base(inputs, final_endpoint='Mixed_7d', scope=None):
         if add_and_check_final('Mixed_4a', net): return net, end_points
 
       # 71 x 71 x 192
-      with tf.variable_scope('Mixed_5a',reuse=reuse):
+      with tf.variable_scope('Mixed_5a'):
         with tf.variable_scope('Branch_0',reuse=reuse):
           branch_0 = slim.conv2d(net, 192, [3, 3], stride=2, padding='VALID',
                                  scope='Conv2d_1a_3x3')
