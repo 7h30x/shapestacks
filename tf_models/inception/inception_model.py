@@ -331,7 +331,7 @@ def inception_v4_logregr_model_fn(features, labels, mode, params):
     eval_metric_ops = {
         'pred_mean' : tf.metrics.mean(
             #labels=tf.reshape(tf.cast(labels, tf.int32), [-1, 1]),
-            predictions['classes']),
+            predictions['probabilities']),
         'label' : tf.metrics.mean(tf.reshape(tf.cast(labels, tf.int32), [-1,1]))
     }
 
