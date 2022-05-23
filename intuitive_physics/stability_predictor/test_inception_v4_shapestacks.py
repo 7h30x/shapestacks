@@ -135,7 +135,7 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   e = tf.data.Dataset.from_tensor_slices((c,d))
   f = []
   for j in enumerate(e):
-    f.append(tf.mean([j[0].j[1]])
+    f.append(tf.mean([j[0].j[1]]))
   print(f)
   #for j,k in enumerate(c):
   #  e.append(tf.mean([k,d[j]]))
