@@ -78,9 +78,9 @@ ARGPARSER.add_argument(
 @tf.function
 def get_mean(comb):
   f = tf.TensorArray(dtype=tf.float32,size=0,dynamic_size=True)
-  for j in comb:
-    f.append(tf.metrics.mean([j[0],j[1]]))
-  return f
+  for i,j in enumerate(comb):
+    f = f.write(i,tf.metrics.mean([j[0],j[1]]))
+  return f.stack()
 
 def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   """
