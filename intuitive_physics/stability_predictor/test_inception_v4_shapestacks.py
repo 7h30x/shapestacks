@@ -130,8 +130,12 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   #sess1.run(d)
   #c = tf.get_variable("InceptionV4_1/Logits/PreLogitsFlatten/flatten/Reshape:0") #'PreLogitsFlatten'
   #d = tf.get_variable("InceptionV4/Logits/Logits")
-  print(a[1]['PreLogitsFlatten'])
-  print(b)
+  c = a[1]['PreLogitsFlatten']
+  d = b[1]['PreLogitsFlatten']
+  e = []
+  for j,k in enumerate(c):
+    e.append(tf.mean([k,d[j]]))
+  print(e)
   #print(c)
 
   # evaluate the model on the corresponding test set
