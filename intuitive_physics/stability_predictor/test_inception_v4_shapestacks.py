@@ -141,12 +141,14 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   print(cl)
   #d = b[1]['PreLogitsFlatten']
   dl = b[1]['Logits']
+  e = tf.metrics.mean_tensor(cl,dl)
+  print(e)
   #print(d)
-  e = tf.data.Dataset.from_tensor_slices((cl,dl))
-  e = tf.convert_to_tensor(e)
-  f = tf.math.reduce_mean(e,1)
+  #e = tf.data.Dataset.from_tensor_slices((cl,dl))
+  #e = tf.convert_to_tensor(e)
+  #f = tf.math.reduce_mean(e,1)
   print(f)
-  g = tf.metrics.mean(tf.flatten(f))
+  #g = tf.metrics.mean(tf.flatten(f))
   #for j,k in enumerate(c):
   #  e.append(tf.mean([k,d[j]]))
   #print(e)
