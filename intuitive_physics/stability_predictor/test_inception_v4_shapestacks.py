@@ -131,7 +131,7 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   num = 1
   features, labels = shapestacks_input_fn('eval', FLAGS.data_dir, FLAGS.split_name, FLAGS.batch_size, i, num, FLAGS.epochs_per_eval, FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums)
   b = inception_v4(features, 1, False, reuse=tf.AUTO_REUSE)
-  print(b[1])
+  #print(b[1])
   #d = inception_v4_base(features)
   #sess1 = tf.compat.v1.Session()
   #sess1.run(d)
@@ -139,15 +139,18 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   #d = tf.get_variable("InceptionV4/Logits/Logits")
   #c = a[1]['PreLogitsFlatten']
   cl = a[1]['Logits']
+  c = tf.keras.metrics.Sum(cl)
   #d = b[1]['PreLogitsFlatten']
   dl = b[1]['Logits']
-  e = call(cl)
+  d = tf.keras.metrics.Sum(dl)
+  e = c + d
+  e = tf.nn.sigmoid(e)
   print(e)
   #print(d)
   #e = tf.data.Dataset.from_tensor_slices((cl,dl))
   #e = tf.convert_to_tensor(e)
   #f = tf.math.reduce_mean(e,1)
-  print(f)
+  #print(f)
   #g = tf.metrics.mean(tf.flatten(f))
   #for j,k in enumerate(c):
   #  e.append(tf.mean([k,d[j]]))
