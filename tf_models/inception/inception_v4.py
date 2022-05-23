@@ -280,7 +280,7 @@ def inception_v4(ite, inputs, num_classes=1001, is_training=True,
     end_points: the set of end_points from the inception model.
   """
   end_points = {}
-  with tf.variable_scope(scope, 'InceptionV4', [inputs], reuse=reuse) as scope:
+  with tf.variable_scope(scope, 'InceptionV4', [ite, inputs], reuse=reuse) as scope:
     with slim.arg_scope([slim.batch_norm, slim.dropout],
                         is_training=is_training):
       net, end_points = inception_v4_base(inputs, ite, scope=scope)
