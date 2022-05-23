@@ -170,12 +170,12 @@ def inception_v4_base(inputs, final_endpoint='Mixed_7d', scope=None):
     end_points[name] = net
     return name == final_endpoint
 
-  with tf.variable_scope(scope, 'InceptionV4', [inputs]):
+  with tf.variable_scope(scope, 'InceptionV4', [inputs],reuse=reuse):
     with slim.arg_scope([slim.conv2d, slim.max_pool2d, slim.avg_pool2d],
                         stride=1, padding='SAME'):
       # 299 x 299 x 3
       net = slim.conv2d(inputs, 32, [3, 3], stride=2,
-                        padding='VALID', scope='Conv2d_1a_3x3',reuse=reuse)
+                        padding='VALID', scope='Conv2d_1a_3x3')
       if add_and_check_final('Conv2d_1a_3x3', net): return net, end_points
       # 149 x 149 x 32
       net = slim.conv2d(net, 32, [3, 3], padding='VALID',
