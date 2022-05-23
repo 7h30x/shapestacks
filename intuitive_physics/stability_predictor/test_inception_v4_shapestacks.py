@@ -114,8 +114,12 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   labels = []
   num = 0
   i = scenario_list[0]#for num, i in enumerate(scenario_list):
-  features, labels = shapestacks_input_fn('eval', FLAGS.data_dir, FLAGS.split_name, FLAGS.batch_size, i, num, FLAGS.epochs_per_eval, FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums)
-  inception_v4_logregr_model_fn(features, labels, 'eval', [])
+  sess = tf.compat.v1.Session()
+  with sess.as_default():
+    a = inception_v4_logregr_model_fn(features, labels, 'eval', [])
+    features, labels = shapestacks_input_fn('eval', FLAGS.data_dir, FLAGS.split_name, FLAGS.batch_size, i, num, FLAGS.epochs_per_eval, FLAGS.n_prefetch, FLAGS.augment, FLAGS.angle_nums)
+    b = tf.print(a)
+    sess.run(b)
 
   # evaluate the model on the corresponding test set
     #test_results = classifier.evaluate(
