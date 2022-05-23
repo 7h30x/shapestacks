@@ -143,9 +143,11 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   dl = b[1]['PreLogitsFlatten']
   c = tf.shape(cl)[0]
   d = tf.shape(dl)[1]
+  cl = cl.set_shape(c,d)
+  dl = dl.set_shape(c,d)
   print(c)
   print(d)
-  e = tf.metrics.mean_tensor(cl,dl,shape=(c,d))
+  e = tf.metrics.mean_tensor(cl,dl)
   print(e)
   #print(d)
   #e = tf.data.Dataset.from_tensor_slices((cl,dl))
