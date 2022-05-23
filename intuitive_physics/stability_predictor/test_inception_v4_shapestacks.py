@@ -143,6 +143,7 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   dl = b[1]['Logits']
   #print(d)
   e = tf.data.Dataset.from_tensor_slices((cl,dl))
+  e = tf.convert_to_tensor(e)
   f = tf.math.reduce_mean(e,1)
   print(f)
   g = tf.metrics.mean(tf.flatten(f))
