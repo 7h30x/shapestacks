@@ -78,9 +78,9 @@ ARGPARSER.add_argument(
 @tf.function
 def call(comb):
   dims = tf.shape(comb)
-  dim1 = dims[0]
-  dim2 = dims[1]
-  return dim1,dim2
+  dim1 = comb.set_shape[dims]
+  dim2 = comb.set_shape[dims]
+  return tf.metrics.mean_tensor(dim1,dim2)
 
 def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   """
@@ -143,7 +143,7 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   dl = b[1]['Logits']
   cl = cl.set_shape(tf.shape(cl))
   dl = dl.set_shape(tf.shape(dl))
-  e = tf.metrics.mean_tensor(cl,dl)
+  e = call(cl)
   print(e)
   #print(d)
   #e = tf.data.Dataset.from_tensor_slices((cl,dl))
