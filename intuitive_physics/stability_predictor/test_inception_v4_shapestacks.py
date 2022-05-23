@@ -138,9 +138,9 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   #c = tf.get_variable("InceptionV4_1/Logits/PreLogitsFlatten/flatten/Reshape:0") #'PreLogitsFlatten'
   #d = tf.get_variable("InceptionV4/Logits/Logits")
   #c = a[1]['PreLogitsFlatten']
-  cl = a[1]['PreLogitsFlatten']
+  cl = a[1]['Logits']
   #d = b[1]['PreLogitsFlatten']
-  dl = b[1]['PreLogitsFlatten']
+  dl = b[1]['Logits']
   c = tf.shape(cl)[0]
   d = tf.shape(dl)[1]
   cl = cl.set_shape(c,d)
