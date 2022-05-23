@@ -133,13 +133,13 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
     tot = 0.0
     for num in range(FLAGS.angle_nums):
       session = tf.compat.v1.Session()
-      c, label = session.run(call(a,b))
+      c, label = session.run(call(i,num))
       if num == 0:
         labels.append(label)
       tot += c.result()
     tot = tot / FLAGS.angle_nums
     sess = tf.compat.v1.Session()
-    sig = sess.run(sigmoid(a))
+    sig = sess.run(sigmoid(tot))
     prediction_mean.append(sig)
   
 
