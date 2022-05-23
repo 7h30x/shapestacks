@@ -166,11 +166,11 @@ def inception_v4_base(inputs, final_endpoint='Mixed_7d', scope=None):
   """
   end_points = {}
 
-  def add_and_check_final(name, ite, net):
+  def add_and_check_final(name, net):
     end_points[name] = net
     return name == final_endpoint
 
-  with tf.variable_scope(scope, 'InceptionV4', [ite, inputs]):
+  with tf.variable_scope(scope, 'InceptionV4', [inputs]):
     with slim.arg_scope([slim.conv2d, slim.max_pool2d, slim.avg_pool2d],
                         stride=1, padding='SAME'):
       # 299 x 299 x 3
@@ -254,7 +254,7 @@ def inception_v4_base(inputs, final_endpoint='Mixed_7d', scope=None):
   raise ValueError('Unknown final endpoint %s' % final_endpoint)
 
 
-def inception_v4(ite, inputs, num_classes=1001, is_training=True,
+def inception_v4(inputs, num_classes=1001, is_training=True,
                  dropout_keep_prob=0.8,
                  reuse=None,
                  scope='InceptionV4',
@@ -280,10 +280,11 @@ def inception_v4(ite, inputs, num_classes=1001, is_training=True,
     end_points: the set of end_points from the inception model.
   """
   end_points = {}
-  with tf.variable_scope(scope, 'InceptionV4', [ite, inputs], reuse=reuse) as scope:
+  with tf.variable_scope(scope, 'InceptionV4', [inputs], reuse=reuse) as scope:
+    scope.reuse_variables()
     with slim.arg_scope([slim.batch_norm, slim.dropout],
                         is_training=is_training):
-      net, end_points = inception_v4_base(inputs, ite, scope=scope)
+      net, end_points = inception_v4_base(inputs, scope=scope)
 
       with slim.arg_scope([slim.conv2d, slim.max_pool2d, slim.avg_pool2d],
                           stride=1, padding='SAME'):
