@@ -220,7 +220,7 @@ def _center_data(feature, label, rgb_mean):
 
 def shapestacks_input_fn(
     mode, data_dir, split_name,
-    batch_size, scenario, num_epochs=1,
+    batch_size, scenario, curr, num_epochs=1,
     n_prefetch=2, augment=[], angle_nums=1):
   """
   Input_fn to feed a tf.estimator.Estimator with ShapeStacks images.
@@ -246,7 +246,7 @@ def shapestacks_input_fn(
       'subtract_mean': subtracts the RGB mean of the data chunk loaded
   """
   split_dir = os.path.join(data_dir, 'splits', split_name)
-  filenames, labels = _get_filenames_with_labels(mode, data_dir, scenario, angle_nums)
+  filenames, labels = _get_filenames_with_labels(mode, data_dir, scenario, angle_nums, curr)
   rgb_mean_npy = np.load(os.path.join(split_dir, mode + '_bgr_mean.npy'))[[2, 1, 0]]
   dataset = _create_dataset(filenames, labels)
 
