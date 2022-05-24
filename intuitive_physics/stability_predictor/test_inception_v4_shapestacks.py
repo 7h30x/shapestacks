@@ -121,8 +121,6 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
 
   prediction_mean = tf.TensorArray(tf.float32, 0, dynamic_size=True)
   labels = []
-  num = 0
-  i = scenario_list[0]
   for count, i in enumerate(scenario_list):
     tot = tf.keras.metrics.Sum()
     for num in range(FLAGS.angle_nums):
@@ -132,6 +130,7 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
       a = inception_v4(features, 1, False, reuse=tf.AUTO_REUSE)
       b = a[1]['Logits']
       tot.update_state(b)
+    print(tot.result())
     tot = tf.math.divide(tot.result(), FLAGS.angle_nums)
     sig = tf.nn.sigmoid(tot)
     prediction_mean.write(count,sig)
