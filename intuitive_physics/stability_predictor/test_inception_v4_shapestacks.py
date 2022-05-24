@@ -161,7 +161,7 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
     print(pred)
     print(labels[i])
     total += (pred - labels[i]) ** 2
-  total = total / len(prediction_mean)
+  total = total / len(arr)
   print(total)
 
 #   # evaluate the model on real data
