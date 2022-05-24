@@ -153,11 +153,9 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
     #prediction_mean.append(test_results['pred_mean'])
     #print(test_results['label'])
     #labels.append(test_results['label'])
-  tf.config.experimental_run_functions_eagerly(True)
-  final(prediction_mean, labels)
-@tf.function
-def final(prediction_mean, labels):
-  arr = prediction_mean.concat().numpy()
+  sess = tf.Session()
+  with sess.as_default():
+    arr = prediction_mean.concat().eval()
   total = 0.0
   for i, pred in enumerate(arr):
     print(pred)
