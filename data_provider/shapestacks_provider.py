@@ -86,7 +86,7 @@ def _get_filenames_with_labels(mode, data_dir, scenario, num_angles, curr):
     elif 'cam_9-' in img_file and num_angles - curr > 8:
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
-    if 'cam_10-' in img_file and num_angles - curr > 9:
+    elif 'cam_10-' in img_file and num_angles - curr > 9:
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
     elif 'cam_11-' in img_file and num_angles - curr > 10:
@@ -98,7 +98,7 @@ def _get_filenames_with_labels(mode, data_dir, scenario, num_angles, curr):
     elif 'cam_13-' in img_file and num_angles - curr > 12:
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
-    if 'cam_14-' in img_file and num_angles - curr > 13:
+    elif 'cam_14-' in img_file and num_angles - curr > 13:
       filenames.append(os.path.join(scenario_dir, img_file))
       labels.append(label)
     elif 'cam_15-' in img_file and num_angles - curr > 14:
@@ -118,7 +118,7 @@ def _create_dataset(filenames, labels):
   dataset = tf.data.Dataset.from_tensor_slices((tf_filenames, tf_labels))
   return dataset
 
-def _parse_record(filename, label):
+def _parse_record(filename):
   """
   Reads the file and returns a (feature, label) pair.
   Image feature values are returned to scale in [0.0, 1.0].
@@ -128,7 +128,7 @@ def _parse_record(filename, label):
   image_resized = tf.image.resize_image_with_crop_or_pad(image_decoded, _HEIGHT, _WIDTH)
   image_float = tf.cast(image_resized, tf.float32)
   image_float = tf.reshape(image_float, [_HEIGHT, _WIDTH, _CHANNELS])
-  return image_float, label
+  return image_float
 
 def _augment(feature, label, augment):
   """
@@ -248,25 +248,25 @@ def shapestacks_input_fn(
   split_dir = os.path.join(data_dir, 'splits', split_name)
   filenames, labels = _get_filenames_with_labels(mode, data_dir, scenario, angle_nums, curr)
   rgb_mean_npy = np.load(os.path.join(split_dir, mode + '_bgr_mean.npy'))[[2, 1, 0]]
-  dataset = _create_dataset(filenames, labels)
+  #dataset = _create_dataset(filenames, labels)
 
   # shuffle before providing data
   if mode == 'train':
     dataset = dataset.shuffle(buffer_size=len(filenames))
 
   # parse data from files and apply pre-processing
-  dataset = dataset.map(_parse_record)
+  images = filenames.map(_parse_record)
   if augment != [] and mode == 'train':
     dataset = dataset.map(lambda feature, label: _augment(feature, label, augment))
   if 'subtract_mean' in augment:
     dataset = dataset.map(lambda feature, label: _center_data(feature, label, rgb_mean_npy))
 
   # prepare batch and epoch cycle
-  dataset = dataset.prefetch(int(n_prefetch) * int(batch_size))
-  dataset = dataset.repeat(num_epochs)
-  dataset = dataset.batch(batch_size)
+  #dataset = dataset.prefetch(int(n_prefetch) * int(batch_size))
+  #dataset = dataset.repeat(num_epochs)
+  #dataset = dataset.batch(batch_size)
 
   # set up iterator
-  iterator = dataset.make_one_shot_iterator()
-  images, labels = iterator.get_next()
-  return images, labels
+  #iterator = dataset.make_one_shot_iterator()
+  #images, labels = iterator.get_next()
+  return filenames, labels
