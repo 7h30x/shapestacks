@@ -258,7 +258,6 @@ def shapestacks_input_fn(
   filenames = tf.constant(filenames)
   labels = tf.constant(labels)
   images = tf.map_fn(_parse_record,filenames,dtype=tf.float32)
-  print(images)
   if augment != [] and mode == 'train':
     dataset = dataset.map(lambda feature, label: _augment(feature, label, augment))
   if 'subtract_mean' in augment:

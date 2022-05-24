@@ -153,6 +153,8 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
     #print(test_results['label'])
     #labels.append(test_results['label'])
   sess = tf.Session()
+  arr = prediction_mean.concat()
+  print(arr)
   with sess.as_default():
     arr = prediction_mean.concat()
     print(arr)
