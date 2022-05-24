@@ -157,6 +157,8 @@ def analyse_checkpoint(dir_snapshot, name_snapshot, unparsed_argv):
   with sess.as_default():
     arr = prediction_mean.concat().eval()
   total = 0.0
+  print(arr)
+  print(labels)
   for i, pred in enumerate(arr):
     print(pred)
     print(labels[i])
