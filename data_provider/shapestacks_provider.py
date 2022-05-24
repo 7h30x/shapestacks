@@ -255,6 +255,7 @@ def shapestacks_input_fn(
     dataset = dataset.shuffle(buffer_size=len(filenames))
 
   # parse data from files and apply pre-processing
+  filenames = tf.constant(filenames)
   images = filenames.map(_parse_record)
   if augment != [] and mode == 'train':
     dataset = dataset.map(lambda feature, label: _augment(feature, label, augment))
@@ -269,4 +270,4 @@ def shapestacks_input_fn(
   # set up iterator
   #iterator = dataset.make_one_shot_iterator()
   #images, labels = iterator.get_next()
-  return filenames, labels
+  return images, labels
